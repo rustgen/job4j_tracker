@@ -1,9 +1,9 @@
 package ru.job4j.oop;
 
-import junit.framework.TestCase;
 import org.junit.Test;
+
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 public class BatteryTest {
 
