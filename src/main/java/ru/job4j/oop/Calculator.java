@@ -20,8 +20,8 @@ public class Calculator {
         return f / x;
     }
 
-    public int sumAllOperation() {
-        return sum(10) + multiply(5) + minus(16) + divide(20);
+    public int sumAllOperation(int sumAll) {
+        return sum(sumAll) + multiply(sumAll) + minus(sumAll) + divide(sumAll);
     }
 
     public static void main(String[] args) {
@@ -38,7 +38,7 @@ public class Calculator {
         int div = calculator.divide(20);
         System.out.println(div);
 
-        int sumAll = calculator.sumAllOperation();
+        int sumAll = calculator.sumAllOperation(12);
         System.out.println(sumAll);
     }
 }
