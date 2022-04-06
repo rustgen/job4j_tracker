@@ -4,20 +4,8 @@ public class Engineer extends Profession {
 
     private boolean design;
 
-    public Engineer() {
-    }
-
-    public Engineer(String name, boolean design) {
-        super(name);
-        this.design = design;
-    }
-
-    public Engineer(boolean design) {
-        this.design = design;
-    }
-
-    public Engineer(String name, String education) {
-        super(name, education);
+    public boolean layout(Project project) {
+        return design;
     }
 
     public Engineer(String name, String surname, String education, String birthday) {

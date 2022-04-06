@@ -4,9 +4,8 @@ public class Dentist extends Doctor {
 
     private boolean teeth;
 
-    public Dentist(String name, boolean teeth) {
-        super(name);
-        this.teeth = teeth;
+    public boolean tooth(Pacient pacient) {
+        return teeth;
     }
 
     public Dentist(String name, String surname, String education, String birthday) {
