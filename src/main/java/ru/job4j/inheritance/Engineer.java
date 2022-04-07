@@ -8,8 +8,9 @@ public class Engineer extends Profession {
         return design;
     }
 
-    public Engineer(String name, String surname, String education, String birthday) {
+    public Engineer(String name, String surname, String education, String birthday, boolean design) {
         super(name, surname, education, birthday);
+        this.design = design;
     }
 
     public void setDesign() {

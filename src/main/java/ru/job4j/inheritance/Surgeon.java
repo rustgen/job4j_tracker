@@ -8,8 +8,9 @@ public class Surgeon extends Doctor {
         return operation;
     }
 
-    public Surgeon(String name, String surname, String education, String birthday) {
-        super(name, surname, education, birthday);
+    public Surgeon(String name, String surname, String education, String birthday, boolean diagnosis, String operation) {
+        super(name, surname, education, birthday, diagnosis);
+        this.operation = operation;
     }
 
     public String whatOperation(String operation) {

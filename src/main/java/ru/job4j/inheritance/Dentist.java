@@ -8,8 +8,9 @@ public class Dentist extends Doctor {
         return teeth;
     }
 
-    public Dentist(String name, String surname, String education, String birthday) {
-        super(name, surname, education, birthday);
+    public Dentist(String name, String surname, String education, String birthday, boolean diagnosis, boolean teeth) {
+        super(name, surname, education, birthday, diagnosis);
+        this.teeth = teeth;
     }
 
     public void setTeeth(boolean teeth) {

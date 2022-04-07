@@ -8,8 +8,9 @@ public class Doctor extends Profession {
         return diagnosis;
     }
 
-    public Doctor(String name, String surname, String education, String birthday) {
+    public Doctor(String name, String surname, String education, String birthday, boolean diagnosis) {
         super(name, surname, education, birthday);
+        this.diagnosis = diagnosis;
     }
 
     public void setDiagnosis(boolean diagnosis) {

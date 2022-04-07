@@ -8,8 +8,9 @@ public class Programmer extends Engineer {
         return language;
     }
 
-    public Programmer(String name, String surname, String education, String birthday) {
-        super(name, surname, education, birthday);
+    public Programmer(String name, String surname, String education, String birthday, boolean design, String language) {
+        super(name, surname, education, birthday, design);
+        this.language = language;
     }
 
     public boolean runProg(boolean programming) {
