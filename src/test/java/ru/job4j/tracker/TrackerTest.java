@@ -49,18 +49,18 @@ public class TrackerTest {
         Item[] result = tracker.findByName(first.getName());
         assertThat(result.length, is(3));
     }
-//
-//    @Test
-//    public void whenTestFindByNameCheckSecondItemName() {
-//        Tracker tracker = new Tracker();
-//        Item first = new Item("First");
-//        Item second = new Item("Second");
-//        tracker.add(first);
-//        tracker.add(second);
-//        tracker.add(new Item("First"));
-//        tracker.add(new Item("Second"));
-//        tracker.add(new Item("First"));
-//        Item[] result = tracker.findByName(second.getName());
-//        assertThat(result[1].getName(), is(second.getName()));
-//    }
+
+    @Test
+    public void whenTestFindByNameCheckSecondItemName() {
+        Tracker tracker = new Tracker();
+        Item first = new Item("First");
+        Item second = new Item("Second");
+        tracker.add(first);
+        tracker.add(second);
+        tracker.add(new Item("First"));
+        tracker.add(new Item("Second"));
+        tracker.add(new Item("First"));
+        Item[] result = tracker.findByName(second.getName());
+        assertThat(result[1].getName(), is(second.getName()));
+    }
 }
