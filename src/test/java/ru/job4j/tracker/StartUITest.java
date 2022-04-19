@@ -115,4 +115,32 @@ public class StartUITest {
                 )
         );
     }
+
+    @Test
+    public void whenFindAllAction() {
+        Output output = new StubOutput();
+        Input input = new ValidateInput(output, new ConsoleInput());
+//        Input input = new StubInput(
+//                new String[] {null}
+//        );
+        Tracker tracker = new Tracker();
+        UserAction[] actions = {
+                new CreateAction(output), new ShowAction(output), new EditAction(output), new DeleteAction(output),
+                new FindByIdAction(output), new FindByNameAction(output), new ExitAction(output)
+        };
+        new StartUI(output).init(input, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(output.toString(), is(
+                        "Menu:" + ln
+                                + "0. Create" + ln
+                                + "1. Show all items" + ln
+                                + "2. Edit item" + ln
+                                + "3. Delete item" + ln
+                                + "4. Find item by id" + ln
+                                + "5. Find items by name" + ln
+                                + "6. Exit Program" + ln
+                                + "Select: " + ln
+                )
+        );
+    }
 }
