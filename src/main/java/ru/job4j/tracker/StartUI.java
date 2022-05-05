@@ -28,6 +28,9 @@ public class StartUI {
         for (UserAction act : actions) {
             out.println(act + ". " + act.name());
         }
+        for (int index = 0; index < actions.size(); index++) {
+            out.println(index + ". " + actions.get(index).name());
+        }
     }
 
     public static void main(String[] args) {
