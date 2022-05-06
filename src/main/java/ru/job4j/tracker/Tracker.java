@@ -20,11 +20,11 @@ public class Tracker {
     public List<Item> findByName(String key) {
         List<Item> rsl = new ArrayList<>();
         for (Item i : items) {
-            if (i.getName().contains(key)) {
+            if (i.getName().equals(key)) {
                 rsl.add(i);
             }
         }
-        return items;
+        return rsl;
     }
 
     private int indexOf(int id) {
@@ -39,7 +39,7 @@ public class Tracker {
     }
 
     public boolean replace(int id, Item item) {
-        int index = items.indexOf(id);
+        int index = indexOf(id);
         item.setId(id);
         boolean rsl = index != -1;
         if (rsl) {
@@ -49,7 +49,7 @@ public class Tracker {
     }
 
     public boolean delete(int id) {
-        int index = items.indexOf(id);
+        int index = indexOf(id);
         boolean rsl = index != -1;
         if (rsl) {
             items.remove(index);
@@ -58,7 +58,7 @@ public class Tracker {
     }
 
     public Item findById(int id) {
-        int index = items.indexOf(id);
-        return index != -1 ? items.get(id) : null;
+        int index = indexOf(id);
+        return index != -1 ? items.get(index) : null;
     }
 }
