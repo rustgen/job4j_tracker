@@ -13,14 +13,16 @@ public class BankService {
         if (!users.containsKey(user)) {
             users.put(user, accounts);
         }
+        users.putIfAbsent(user, accounts);
     }
 
     public void addAccount(String passport, Account account) {
         User user = findByPassport(passport);
-        List<Account> accounts = users.get(user);
-        if (!accounts.contains(account)) {
-            accounts.add(account);
-            users.put(user, accounts);
+        if (user != null) {
+            List<Account> accounts = users.get(user);
+            if (!accounts.contains(account)) {
+                accounts.add(account);
+            }
         }
     }
 
@@ -35,9 +37,13 @@ public class BankService {
 
     public Account findByRequisite(String passport, String requisite) {
         User user = findByPassport(passport);
-        List<Account> accounts = users.get(user);
-        if (user != null && accounts.contains(requisite)) {
-           return accounts.get(Integer.parseInt(requisite));
+        if (user != null) {
+            List<Account> accounts = users.get(user);
+            for (Account num : accounts) {
+                if (num.getRequisite().equals(requisite)) {
+                    return num;
+                }
+            }
         }
         return null;
     }
@@ -45,11 +51,12 @@ public class BankService {
     public boolean transferMoney(String srcPassport, String srcRequisite,
                                  String destPassport, String destRequisite, double amount) {
         boolean rsl = false;
-        User user = findByPassport(srcPassport);
-        List<Account> accounts = users.get(user);
-        if (accounts.contains(findByRequisite(srcRequisite, srcRequisite))
-                && accounts.contains(findByRequisite(destPassport, destRequisite))) {
-
+        Account from = findByRequisite(srcPassport, srcRequisite);
+        Account to = findByRequisite(destPassport, destRequisite);
+        if (from != null && to != null && from.getBalance() >= amount) {
+            from.setBalance(from.getBalance() - amount);
+            to.setBalance(to.getBalance() + amount);
+            return true;
         }
         return rsl;
     }
