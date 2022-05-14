@@ -27,8 +27,12 @@ public class ItemAscByName implements Comparable<ItemAscByName> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         ItemAscByName that = (ItemAscByName) o;
         return id == that.id && Objects.equals(name, that.name);
     }
@@ -40,9 +44,9 @@ public class ItemAscByName implements Comparable<ItemAscByName> {
 
     @Override
     public String toString() {
-        return "ItemAscByName{" +
-                "name='" + name + '\'' +
-                '}';
+        return "ItemAscByName{"
+                + "name='" + name + '\''
+                + '}';
     }
 
     @Override
