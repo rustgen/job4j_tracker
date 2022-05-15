@@ -7,37 +7,14 @@ public class StringCompare implements Comparator<String> {
 
     @Override
     public int compare(String left, String right) {
-        int sym = 0;
-        if (left.length() == right.length()) {
-            for (int i = 0; i < left.length(); i++) {
-                if (left.charAt(i) == right.charAt(i)) {
-                    sym = 0;
-                } else {
-                    sym = left.charAt(i) > right.charAt(i) ? left.charAt(i) : right.charAt(i);
-                    break;
-                }
+        int rsl = 0;
+        int len = Math.min(left.length(), right.length());
+        for (int i = 1; i <= len; i++) {
+            if (left.charAt(i - 1) != right.charAt(i - 1)) {
+                rsl = Character.compare(left.charAt(i - 1), right.charAt(i - 1));
+                break;
             }
         }
-        if (left.length() < right.length()) {
-            for (int i = 0; i < left.length(); i++) {
-                if (left.charAt(i) == right.charAt(i)) {
-                    sym = -right.charAt(left.length());
-                } else if (left.charAt(i) != right.charAt(i)) {
-                    sym = left.charAt(i) > right.charAt(i) ? left.charAt(i) : right.charAt(i);
-                    break;
-                }
-            }
-        }
-        if (left.length() > right.length()) {
-            for (int i = 0; i < right.length(); i++) {
-                if (left.charAt(i) == right.charAt(i)) {
-                    sym = -left.charAt(right.length());
-                } else if (left.charAt(i) != right.charAt(i)) {
-                    sym = left.charAt(i) > right.charAt(i) ? -left.charAt(i) : -right.charAt(i);
-                    break;
-                }
-            }
-        }
-        return sym;
+        return rsl != 0 ? rsl : Integer.compare(left.length(), right.length());
     }
 }
