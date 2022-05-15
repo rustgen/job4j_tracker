@@ -7,50 +7,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Comparator;
 
-public class ItemAscByName implements Comparable<ItemAscByName> {
-
-    private int id;
-    private String name;
-
-    public ItemAscByName(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
+public class ItemAscByName implements Comparator<Item> {
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        ItemAscByName that = (ItemAscByName) o;
-        return id == that.id && Objects.equals(name, that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
-    }
-
-    @Override
-    public String toString() {
-        return "ItemAscByName{"
-                + "name='" + name + '\''
-                + '}';
-    }
-
-    @Override
-    public int compareTo(ItemAscByName other) {
-        return name.compareTo(other.getName());
+    public int compare(Item o1, Item o2) {
+        return o1.getName().compareTo(o2.getName());
     }
 }
