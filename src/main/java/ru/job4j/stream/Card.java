@@ -14,23 +14,6 @@ public class Card {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Card card = (Card) o;
-        return suit == card.suit && value == card.value;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(suit, value);
-    }
-
-    @Override
     public String toString() {
         return "Card{"
                 + "suit=" + suit
@@ -40,8 +23,8 @@ public class Card {
 
     public static void main(String[] args) {
         Stream.of(Suit.values())
-                .flatMap(suit -> Stream.of(Value.values()))
-                .map(value -> Suit.values() + " " + value)
+                .flatMap(suit -> Stream.of(Value.values())
+                .map(value -> new Card(suit, value)))
                 .forEach(System.out::println);
     }
 }
