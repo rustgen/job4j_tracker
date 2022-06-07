@@ -1,6 +1,7 @@
 package ru.job4j.bank;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * Класс описывает перевод стредств с одного
@@ -43,14 +44,10 @@ public class BankService {
      * либо возвращает null
      */
     public Optional<User> findByPassport(String passport) {
-        Optional<User> rsl = users.keySet()
+        return users.keySet()
                 .stream()
                 .filter(user -> user.getPassport().equals(passport))
                 .findFirst();
-        if (rsl.isPresent()) {
-            return rsl;
-        }
-        return Optional.empty();
     }
 
     /**
@@ -60,13 +57,10 @@ public class BankService {
      */
     public Optional<Account> findByRequisite(String passport, String requisite) {
         Optional<User> user = findByPassport(passport);
-        if (user.isPresent()) {
-            return users.get(user.get())
-                    .stream()
-                    .filter(account -> account.getRequisite().equals(requisite))
-                    .findFirst();
-        }
-        return Optional.empty();
+        return user.flatMap(value -> users.get(value)
+                .stream()
+                .filter(account -> account.getRequisite().equals(requisite))
+                .findFirst());
     }
 
     /**
