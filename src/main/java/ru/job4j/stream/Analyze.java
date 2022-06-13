@@ -17,8 +17,8 @@ public class Analyze {
 
     public static List<Tuple> averageScoreBySubject(Stream<Pupil> stream) {
         return stream
-                .map(s -> new Tuple(s.getName()
-                        , s.getSubjects().stream()
+                .map(s -> new Tuple(s.getName(),
+                        s.getSubjects().stream()
                         .mapToInt(Subject::getScore)
                         .average()
                         .orElse(0)
@@ -39,12 +39,12 @@ public class Analyze {
 
     public static Tuple bestStudent(Stream<Pupil> stream) {
         return stream
-                .map(s -> new Tuple(s.getName()
-                        , s.getSubjects().stream()
+                .map(s -> new Tuple(s.getName(),
+                        s.getSubjects().stream()
                         .mapToInt(Subject::getScore)
                         .sum()
                 ))
-                .max()
+                .max(Comparator.comparingDouble(Subject::getScore))
                 .orElse(null);
     }
 
@@ -56,7 +56,7 @@ public class Analyze {
                         Collectors.summingDouble(Subject::getScore)))
                 .entrySet().stream()
                 .map(value -> new Tuple(value.getKey(), value.getValue()))
-                .max()
+                .max(Comparator.comparingDouble(Subject::getScore))
                 .orElse(null);
     }
 }
