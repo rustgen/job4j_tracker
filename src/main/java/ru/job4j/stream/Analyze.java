@@ -44,7 +44,7 @@ public class Analyze {
                         .mapToInt(Subject::getScore)
                         .sum()
                 ))
-                .max(Comparator.comparingDouble(Subject::getScore))
+                .max(Comparator.comparingDouble(Tuple::getScore))
                 .orElse(null);
     }
 
@@ -56,7 +56,7 @@ public class Analyze {
                         Collectors.summingDouble(Subject::getScore)))
                 .entrySet().stream()
                 .map(value -> new Tuple(value.getKey(), value.getValue()))
-                .max(Comparator.comparingDouble(Subject::getScore))
+                .max(Comparator.comparingDouble(Tuple::getScore))
                 .orElse(null);
     }
 }
