@@ -3,4 +3,3 @@ create table if not exists items (
     name text,
     created timestamp
 );
-
