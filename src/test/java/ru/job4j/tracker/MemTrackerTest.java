@@ -8,11 +8,11 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class TrackerTest {
+public class MemTrackerTest {
     @Test
     public void whenAddNewItemThenTrackerHasSameItem() {
-        MemTracker tracker = new MemTracker();
-        Item item = new Item(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getTimestamp("created").toLocalDateTime());
+        Store tracker = new MemTracker();
+        Item item = new Item();
         item.setName("test1");
         tracker.add(item);
         Item result = tracker.findById(item.getId());
@@ -21,7 +21,7 @@ public class TrackerTest {
 
     @Test
     public void whenTestFindById() {
-        MemTracker tracker = new MemTracker();
+        Store tracker = new MemTracker();
         Item bug = new Item("Bug");
         Item item = tracker.add(bug);
         Item result = tracker.findById(item.getId());
@@ -30,7 +30,7 @@ public class TrackerTest {
 
     @Test
     public void whenTestFindAll() {
-        MemTracker tracker = new MemTracker();
+        Store tracker = new MemTracker();
         Item first = new Item("First");
         Item second = new Item("Second");
         tracker.add(first);
@@ -41,7 +41,7 @@ public class TrackerTest {
 
     @Test
     public void whenTestFindByNameCheckArrayLength() {
-        MemTracker tracker = new MemTracker();
+        Store tracker = new MemTracker();
         Item first = new Item("First");
         Item second = new Item("Second");
         tracker.add(first);
@@ -70,11 +70,11 @@ public class TrackerTest {
     @Test
     public void whenReplace() {
         MemTracker tracker = new MemTracker();
-        Item bug = new Item(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getTimestamp("created").toLocalDateTime());
+        Item bug = new Item();
         bug.setName("Bug");
         tracker.add(bug);
         int id = bug.getId();
-        Item bugWithDesc = new Item(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getTimestamp("created").toLocalDateTime());
+        Item bugWithDesc = new Item();
         bugWithDesc.setName("Bug with description");
         tracker.replace(id, bugWithDesc);
         assertThat(tracker.findById(id).getName(), is("Bug with description"));
@@ -83,7 +83,7 @@ public class TrackerTest {
     @Test
     public void whenDelete() {
         MemTracker tracker = new MemTracker();
-        Item bug = new Item(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getTimestamp("created").toLocalDateTime());
+        Item bug = new Item();
         bug.setName("Bug");
         tracker.add(bug);
         int id = bug.getId();
