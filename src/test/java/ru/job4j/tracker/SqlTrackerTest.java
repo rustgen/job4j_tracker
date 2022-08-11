@@ -100,5 +100,6 @@ public class SqlTrackerTest {
         Item item5 = new Item("item5");
         int id = item1.getId();
         assertThat(tracker.replace(id, item5), is(true));
+        assertThat(tracker.findById(id).getName(), is("item5"));
     }
 }
