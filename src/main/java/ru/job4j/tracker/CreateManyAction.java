@@ -14,9 +14,9 @@ public class CreateManyAction implements UserAction {
 
     @Override
     public boolean execute(Input input, Store tracker) {
-        out.println("=== Create 1 million new Items ===");
-        for (int i = 0; i < 1000000; i++) {
-            tracker.add(new Item(input.askStr(String.format("new Item %s", i))));
+        out.println("=== Create 100K new Items ===");
+        for (int i = 1; i < 100000; i++) {
+            tracker.add(new Item(String.format("new Item %s", i)));
         }
         return true;
     }

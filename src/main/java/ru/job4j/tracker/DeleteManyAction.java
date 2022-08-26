@@ -14,8 +14,8 @@ public class DeleteManyAction implements UserAction {
 
     @Override
     public boolean execute(Input input, Store tracker) {
-        out.println("=== Delete 1 million Items ===");
-        for (int i = 0; i < 1000000; i++) {
+        out.println("=== Delete many Items (all) ===");
+        for (int i = 2_999_999; i > 0; i--) {
             tracker.delete(i);
         }
         return true;
