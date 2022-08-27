@@ -18,9 +18,7 @@ public class DeleteManyAction implements UserAction {
     public boolean execute(Input input, Store tracker) {
         out.println("=== Delete many Items (all) ===");
         List<Item> all = tracker.findAll();
-        Item item = all.get(all.size() - 1);
-        int size = item.getId() - all.size();
-        for (int i = item.getId(); i >= size; i--) {
+        for (int i = all.get(all.size() - 1).getId(); i >= all.get(0).getId(); i--) {
             tracker.delete(i);
         }
         return true;
