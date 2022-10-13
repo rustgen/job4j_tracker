@@ -5,11 +5,17 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HbmTracker implements Store, AutoCloseable {
+
+    private static final Logger LOG = LoggerFactory.getLogger(HbmTracker.class.getName());
+
     private final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
             .configure().build();
     private final SessionFactory sf = new MetadataSources(registry)
@@ -24,6 +30,7 @@ public class HbmTracker implements Store, AutoCloseable {
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+            LOG.error(e.getMessage(), e);
         }
         return item;
     }
@@ -34,14 +41,16 @@ public class HbmTracker implements Store, AutoCloseable {
         boolean result = false;
         try {
             session.beginTransaction();
-            session.createQuery("UPDATE Item SET name = :fName WHERE id = :fId")
+            Query query = sf.getCurrentSession()
+                    .createQuery("UPDATE Item SET name = :fName WHERE id = :fId");
+            result = query
                     .setParameter("fName", item.getName())
                     .setParameter("fId", id)
-                    .executeUpdate();
-            result = true;
+                    .executeUpdate() > 0;
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+            LOG.error(e.getMessage(), e);
         }
         return result;
     }
@@ -52,13 +61,13 @@ public class HbmTracker implements Store, AutoCloseable {
         boolean result = false;
         try {
             session.beginTransaction();
-            session.createQuery("DELETE Item WHERE id = :fId")
-                    .setParameter("fId", id)
-                    .executeUpdate();
-            result = true;
+            Query query = sf.getCurrentSession()
+                    .createQuery("DELETE Item WHERE id = :fId");
+            result = query.setParameter("fId", id).executeUpdate() > 0;
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+            LOG.error(e.getMessage(), e);
         }
         return result;
     }
@@ -74,6 +83,7 @@ public class HbmTracker implements Store, AutoCloseable {
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+            LOG.error(e.getMessage(), e);
         }
         return result;
     }
@@ -84,12 +94,13 @@ public class HbmTracker implements Store, AutoCloseable {
         List result = new ArrayList<>();
         try {
             session.beginTransaction();
-            result = session.createQuery("FROM Item i WHERE i.name LIKE '%fKey%'")
-                    .setParameter("fKey", key)
-                    .list();
+            Query query = sf.getCurrentSession()
+                    .createQuery("FROM Item i WHERE i.name LIKE '%fKey%'");
+            result = query.setParameter("fKey", key).getResultList();
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+            LOG.error(e.getMessage(), e);
         }
         return result;
     }
@@ -104,6 +115,7 @@ public class HbmTracker implements Store, AutoCloseable {
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+            LOG.error(e.getMessage(), e);
         }
         return result;
     }
