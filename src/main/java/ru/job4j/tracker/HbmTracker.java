@@ -20,11 +20,11 @@ public class HbmTracker implements Store, AutoCloseable {
             .configure().build();
     private final SessionFactory sf = new MetadataSources(registry)
             .buildMetadata().buildSessionFactory();
+    private final Session session = sf.openSession();
 
     @Override
     public Item add(Item item) {
-        Session session = sf.openSession();
-        try {
+        try (sf) {
             session.beginTransaction();
             session.save(item);
             session.getTransaction().commit();
@@ -37,9 +37,8 @@ public class HbmTracker implements Store, AutoCloseable {
 
     @Override
     public boolean replace(int id, Item item) {
-        Session session = sf.openSession();
         boolean result = false;
-        try {
+        try (sf) {
             session.beginTransaction();
             Query query = sf.getCurrentSession()
                     .createQuery("UPDATE Item SET name = :fName WHERE id = :fId");
@@ -57,9 +56,8 @@ public class HbmTracker implements Store, AutoCloseable {
 
     @Override
     public boolean delete(int id) {
-        Session session = sf.openSession();
         boolean result = false;
-        try {
+        try (sf) {
             session.beginTransaction();
             Query query = sf.getCurrentSession()
                     .createQuery("DELETE Item WHERE id = :fId");
@@ -74,9 +72,8 @@ public class HbmTracker implements Store, AutoCloseable {
 
     @Override
     public List<Item> findAll() {
-        Session session = sf.openSession();
         List result = new ArrayList<>();
-        try {
+        try (sf) {
             session.beginTransaction();
             result = session.createQuery("FROM Item i ORDER BY i.id ASC, i.name ASC")
                     .list();
@@ -90,12 +87,11 @@ public class HbmTracker implements Store, AutoCloseable {
 
     @Override
     public List<Item> findByName(String key) {
-        Session session = sf.openSession();
         List result = new ArrayList<>();
-        try {
+        try (sf) {
             session.beginTransaction();
             Query query = sf.getCurrentSession()
-                    .createQuery("FROM Item i WHERE i.name LIKE '%fKey%'");
+                    .createQuery("FROM Item i WHERE i.name = :fKey");
             result = query.setParameter("fKey", key).getResultList();
             session.getTransaction().commit();
         } catch (Exception e) {
@@ -107,9 +103,8 @@ public class HbmTracker implements Store, AutoCloseable {
 
     @Override
     public Item findById(int id) {
-        Session session = sf.openSession();
         Item result = null;
-        try {
+        try (sf) {
             session.beginTransaction();
             result = session.get(Item.class, id);
             session.getTransaction().commit();
